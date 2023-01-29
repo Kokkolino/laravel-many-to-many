@@ -45,7 +45,7 @@
                     @else
                     {{-- else -> loop --}}
                         @foreach ($post->tags as $tag)
-                            {{$tag->name}},
+                        <span class="badge bg-light text-dark mb-1">{{ $tag['name'] }}</span>
                         @endforeach
                     @endif
 
