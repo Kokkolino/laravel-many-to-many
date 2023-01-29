@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Post;
 use App\category;
+use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -29,8 +30,9 @@ class PostsController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -54,6 +56,11 @@ class PostsController extends Controller
         $new_record = new Post();
         $new_record->fill($data);
         $new_record->save();
+
+
+        if(array_key_exists('tags', $data)){
+            $new_record->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('admin.posts.index');
     }
@@ -79,8 +86,10 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -115,9 +124,10 @@ class PostsController extends Controller
     public function destroy($id)
     {
 
-        $comic = Post::findOrFail($id);
-        $comic->delete();
-        return redirect()->route('admin.posts.index')->with('deleted', "$comic->title é stato cancellato.");
+        $post = Post::findOrFail($id);
+        $post->tags()->sync([]);
+        $post->delete();
+        return redirect()->route('admin.posts.index')->with('deleted', "$post->title é stato cancellato.");
 
     }
 }
