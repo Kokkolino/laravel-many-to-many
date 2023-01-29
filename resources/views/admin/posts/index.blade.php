@@ -14,6 +14,7 @@
                 <th scope="col">Title</th>
                 <th scope="col">Body</th>
                 <th scope="col">Category</th>
+                <th scope="col">Tags</th>
                 <th scope="col">Settings</th>
             </tr>
             </thead>
@@ -29,15 +30,29 @@
                     <a href="{{route('admin.posts.show', $post->id)}}">{{$post->title}}</a>
                 </td>
                 {{-- body --}}
-                <td class="col-4">{{$post->body}}</td>
+                <td class="col-3">{{$post->body}}</td>
                 {{-- category --}}
                 @if (is_null($post->category))
                 <td class="col-2">N/D</td>
                 @else
                 <td class="col-2">{{$post->category['category']}}</td>
                 @endif
+                {{-- tags --}}
+                <td class="col-2">
+                    {{-- if null --}}
+                    @if (is_null($post->tags))
+                        N/D
+                    @else
+                    {{-- else -> loop --}}
+                        @foreach ($post->tags as $tag)
+                            {{$tag->name}},
+                        @endforeach
+                    @endif
+
+
+                </td>
                 {{-- settings --}}
-                <td class="flex justify-content-between gap-3 col-2">
+                <td class="flex justify-content-between gap-3 col-1">
                     {{-- edit --}}
                     <a class="col-4 fs-5" href="{{route('admin.posts.edit', $post->id)}}" alt="edit">
                         <i class="fa-solid fa-pen-to-square"></i>
