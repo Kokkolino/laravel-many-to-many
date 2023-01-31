@@ -21,7 +21,7 @@ class PostsController extends Controller
     public function index()
     {
         $data = [
-            'posts' => Post::with('category')->paginate(5)
+            'posts' => Post::with('category')->paginate(6)
         ];
         return view('admin.posts.index', $data);
     }
