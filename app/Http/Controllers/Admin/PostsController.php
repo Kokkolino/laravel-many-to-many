@@ -120,12 +120,16 @@ class PostsController extends Controller
 
         $post = Post::findOrFail($id);
 
+        // if img upload
         if(array_key_exists('upload', $data)){
+            // delete old img
+            Storage::delete($post->image);
+            // update new img
             $image_url= Storage::put('post_images', $data['upload']);
             $data['image'] = $image_url;
         }
 
-
+        //update post
         $post->update($data);
         return redirect()->route('admin.posts.show', $post->id);
     }
