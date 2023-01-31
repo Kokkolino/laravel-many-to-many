@@ -9,10 +9,10 @@
             <label class="form-label">Title</label>
             <input name="title" type="text" class="form-control" value="{{$post['title']}}">
         </div>
-        {{-- body --}}
+        {{-- description --}}
         <div class="mb-3">
-            <label class="form-label">Body</label>
-            <input name="body" type="text" class="form-control" value="{{$post['body']}}">
+            <label class="form-label">Description</label>
+            <input name="description" type="text" class="form-control" value="{{$post['description']}}">
         </div>
         {{-- categories --}}
             <select name="category_id" class="form-select form-select-sm mb-4" aria-label=".form-select-sm example">

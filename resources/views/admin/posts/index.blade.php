@@ -29,8 +29,8 @@
                 <td class="col-3">
                     <a href="{{route('admin.posts.show', $post->id)}}">{{$post->title}}</a>
                 </td>
-                {{-- body --}}
-                <td class="col-3">{{$post->body}}</td>
+                {{-- description --}}
+                <td class="col-3">{{$post->description}}</td>
                 {{-- category --}}
                 @if (is_null($post->category))
                 <td class="col-2">N/D</td>
@@ -73,6 +73,8 @@
             {{-- endforeach; --}}
             </tbody>
         </table>
+        <div>
+            {{$posts->links()}}
+        </div>
     </div>
-
 @endsection

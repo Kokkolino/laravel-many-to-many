@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Post;
 use App\category;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+// image storage
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -17,7 +21,7 @@ class PostsController extends Controller
     public function index()
     {
         $data = [
-            'posts' => Post::with('category')->paginate(10)
+            'posts' => Post::with('category')->paginate(5)
         ];
         return view('admin.posts.index', $data);
     }
@@ -52,8 +56,13 @@ class PostsController extends Controller
             ]
         );
 
-
         $new_record = new Post();
+
+        if(array_key_exists('image', $data)){
+            $image_url= Storage::put('post_images', $data['upload']);
+            $data['image'] = $image_url;
+        }
+
         $new_record->fill($data);
         $new_record->save();
 

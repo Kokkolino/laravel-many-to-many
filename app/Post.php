@@ -8,8 +8,9 @@ class Post extends Model
 {
     protected $fillable =[
         'title',
-        'body',
-        'category_id'
+        'description',
+        'category_id',
+        'image'
     ];
 
     public function category(){

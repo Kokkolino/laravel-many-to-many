@@ -7,7 +7,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Body</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Category</th>
                     <th scope="col">Tags</th>
                     <th scope="col">Settings</th>
@@ -22,8 +22,8 @@
                     <td class="col-3">
                         {{$post->title}}
                     </td>
-                {{-- body --}}
-                <td class="col-3">{{$post->body}}</td>
+                {{-- description --}}
+                <td class="col-3">{{$post->description}}</td>
                 {{-- category --}}
                 @if (is_null($post->category))
                 <td class="col-2">N/D</td>
