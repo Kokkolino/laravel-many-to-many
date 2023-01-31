@@ -1,9 +1,23 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="container-lg">
-    <form method="POST" action="{{route('admin.posts.update', $post['id'])}}">
+    <form method="POST" action="{{route('admin.posts.update', $post['id'])}}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
+
+        @error('title')
+        <div class="alert alert-danger">
+            titolo va in errore
+        </div>
+        @enderror
+
+        @error('description')
+        <div class="alert alert-danger">
+            descrizione va in errore
+        </div>
+        @enderror
+
+
         {{-- title --}}
         <div class="mb-3">
             <label class="form-label">Title</label>
@@ -35,6 +49,13 @@
             @endforeach
           </div>
 
+        {{-- image --}}
+        <div class="mb-3">
+            <label class="form-label">Upload image</label>
+            <input name="upload" type="file" class="form-control-file">
+        </div>
+
+        {{-- submit button --}}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

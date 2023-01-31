@@ -5,6 +5,19 @@
     <form method="POST" action="{{route('admin.posts.store')}}" enctype="multipart/form-data">
         @csrf
 
+        @error('title')
+        <div class="alert alert-danger">
+            titolo va in errore
+        </div>
+        @enderror
+
+        @error('description')
+        <div class="alert alert-danger">
+            descrizione va in errore
+        </div>
+        @enderror
+
+
         {{-- title --}}
         <div class="mb-3">
             <label class="form-label">Title</label>
@@ -42,10 +55,10 @@
           </div>
 
         {{-- image --}}
-        {{-- <div class="mb-3">
+        <div class="mb-3">
             <label class="form-label">Upload image</label>
             <input name="upload" type="file" class="form-control-file">
-        </div> --}}
+        </div>
 
         {{-- submit button --}}
         <button type="submit" class="btn btn-primary">Submit</button>

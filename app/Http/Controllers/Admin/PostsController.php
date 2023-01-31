@@ -52,13 +52,13 @@ class PostsController extends Controller
         $request->validate(
             [
                 'title' => 'required|max:30',
-                'body' => 'required|max:250'
+                'description' => 'required|max:250'
             ]
         );
 
         $new_record = new Post();
 
-        if(array_key_exists('image', $data)){
+        if(array_key_exists('upload', $data)){
             $image_url= Storage::put('post_images', $data['upload']);
             $data['image'] = $image_url;
         }
@@ -114,11 +114,17 @@ class PostsController extends Controller
         $request->validate(
             [
                 'title' => 'required|max:30',
-                'body' => 'required|max:250'
+                'description' => 'required|max:250'
             ]
         );
 
         $post = Post::findOrFail($id);
+
+        if(array_key_exists('upload', $data)){
+            $image_url= Storage::put('post_images', $data['upload']);
+            $data['image'] = $image_url;
+        }
+
 
         $post->update($data);
         return redirect()->route('admin.posts.show', $post->id);
@@ -134,6 +140,10 @@ class PostsController extends Controller
     {
 
         $post = Post::findOrFail($id);
+        if($post->image){
+            Storage::delete($post->image);
+        }
+
         $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index')->with('deleted', "$post->title é stato cancellato.");
