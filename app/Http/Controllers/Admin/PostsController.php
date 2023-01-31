@@ -7,7 +7,9 @@ use App\category;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Mail\CreatePostMail;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 // image storage
 use Illuminate\Support\Facades\Storage;
 
@@ -70,6 +72,10 @@ class PostsController extends Controller
         if(array_key_exists('tags', $data)){
             $new_record->tags()->sync($data['tags']);
         }
+
+        $mail = new CreatePostMail($newPost);
+        $userEmail = Auth::user()->email;
+        Mail::to($userEmail)->send($mail);
 
         return redirect()->route('admin.posts.index');
     }
