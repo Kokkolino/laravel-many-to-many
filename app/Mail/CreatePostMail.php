@@ -18,7 +18,7 @@ class CreatePostMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
         $this->post = $post;
     }

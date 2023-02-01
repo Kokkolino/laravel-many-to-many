@@ -73,8 +73,11 @@ class PostsController extends Controller
             $new_record->tags()->sync($data['tags']);
         }
 
-        $mail = new CreatePostMail($newPost);
+        //$mail =  Mail model
+        $mail = new CreatePostMail($new_record);
+        //take user email
         $userEmail = Auth::user()->email;
+        //send email to user
         Mail::to($userEmail)->send($mail);
 
         return redirect()->route('admin.posts.index');
